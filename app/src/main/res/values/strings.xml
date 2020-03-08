@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">CropDoctor</string>
     <string name="title">Crop Doctor</string>
-    <string name="camera">Camera</string>
+    <string name="camera">拍照</string>
     <string name="sel_pic">选择图片</string>
     <string name="about">关于</string>
+    <string name="confirm">确定</string>
 </resources>
