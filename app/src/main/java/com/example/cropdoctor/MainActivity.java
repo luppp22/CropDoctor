@@ -26,17 +26,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Log.d("MainActivity", "MainActivity begin!");
-
+        //Log.d("MainActivity", "MainActivity begin!");
         Button btnCam = (Button) findViewById(R.id.button_camera);
         btnCam.setOnClickListener(new BtnCamClickListener());
     }
 
     // 相机按钮监听器
     class BtnCamClickListener implements View.OnClickListener {
-
-
         @Override
         public void onClick(View v) {
             File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
