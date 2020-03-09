@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">CropDoctor</string>
     <string name="title">Crop Doctor</string>
-    <string name="camera">Camera</string>
+    <string name="camera">拍照</string>
     <string name="sel_pic">选择图片</string>
     <string name="about">关于</string>
+    <string name="confirm">确定</string>
+    <string name="url">https://japaneast.api.cognitive.microsoft.com/customvision/v3.0/Prediction/cfb94534-12ec-43ed-86e1-edd694c3b93b/classify/iterations/1210-101/image</string>
+    <string name="key">587e316ed8b94c82bedbb08e06ac3d5e</string>
 </resources>
