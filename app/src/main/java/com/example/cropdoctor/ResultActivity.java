@@ -5,13 +5,22 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,6 +49,7 @@ public class ResultActivity extends AppCompatActivity {
     private Uri imageUri;
     private Result resultData;
     private ResultAdapter resultAdapter;
+    private ProgressDialog progressDialog;
 
     private static class Result {
         private String id;
@@ -51,6 +62,10 @@ public class ResultActivity extends AppCompatActivity {
             private double probability;
             private String tagId;
             private String tagName;
+
+            public String getTagId() {
+                return tagId;
+            }
 
             public String getTagName() {
                 return tagName;
@@ -70,13 +85,16 @@ public class ResultActivity extends AppCompatActivity {
     public static class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
         private List<Result.Prediction> predictionList;
         private OnItemClickListener onItemClickListener;
+        private Context context;
 
         private static class ViewHolder extends RecyclerView.ViewHolder{
+            private ImageView imageView;
             private TextView textName;
             private TextView textProbability;
 
             public ViewHolder(View view) {
                 super(view);
+                imageView = (ImageView) view.findViewById(R.id.result_item_picture);
                 textName = (TextView) view.findViewById(R.id.result_item_name);
                 textProbability = (TextView) view.findViewById(R.id.result_item_probability);
             }
@@ -86,8 +104,9 @@ public class ResultActivity extends AppCompatActivity {
             void onItemClick(int position);
         }
 
-        public ResultAdapter(List<Result.Prediction> _predictionList) {
+        public ResultAdapter(List<Result.Prediction> _predictionList, Context _context) {
             predictionList = _predictionList;
+            context = _context;
         }
 
         @Override
@@ -100,6 +119,14 @@ public class ResultActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             Result.Prediction prediction = predictionList.get(position);
+            String fileName = "image/" + prediction.getTagId() + ".jpg";
+            try {
+                InputStream inputStream = context.getAssets().open(fileName);
+                Drawable drawable = Drawable.createFromStream(inputStream, null);
+                holder.imageView.setImageDrawable(drawable);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             holder.textName.setText(prediction.getTagName());
             String strProbability = "概率：" + String.valueOf(prediction.getProbability());
             holder.textProbability.setText(strProbability);
@@ -131,21 +158,38 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        ImageView imageView = (ImageView) findViewById(R.id.result_image);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.result_list);
+        progressDialog = new ProgressDialog(ResultActivity.this);
+        progressDialog.setTitle("查询中");
+        progressDialog.setMessage("请稍后");
+        progressDialog.setCancelable(true);
+        progressDialog.show();
         Intent intent = getIntent();
         imageUri = Uri.parse(intent.getStringExtra("uriString"));
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+            imageView.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // 先创建一个空的数据源，供Adapter使用
         resultData = new Result();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.result_list);
-        resultAdapter = new ResultAdapter(resultData.predictions);
+        resultAdapter = new ResultAdapter(resultData.predictions, ResultActivity.this);
         resultAdapter.setOnItemClickListener(new ResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 // 这里写点击事件
-                Toast.makeText(
-                        ResultActivity.this,
-                        "clicked" + position,
-                        Toast.LENGTH_SHORT
-                ).show();
+                Result.Prediction prediction = null;
+                Iterator<Result.Prediction> iterator = resultData.predictions.iterator();
+                for(int i = 0; i <= position; i++) {
+                    prediction = iterator.next();
+                }
+                if (prediction != null) {
+                    DetailActivity.activityStart(
+                            ResultActivity.this, prediction.tagId, prediction.tagName);
+                }
             }
         });
         recyclerView.setAdapter(resultAdapter);
@@ -171,23 +215,26 @@ public class ResultActivity extends AppCompatActivity {
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            public void onFailure(Call call, final IOException e) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        progressDialog.dismiss();
                         Toast.makeText(ResultActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                        Log.d("HTTP failed", e.getMessage());
                         finish();
                     }
                 });
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 convertToClass(response.body().string());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         resultAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
                     }
                 });
             }

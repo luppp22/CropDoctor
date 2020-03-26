@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         btnCam.setOnClickListener(new BtnCamClickListener());
         Button btnPic = (Button) findViewById(R.id.button_picture);
         btnPic.setOnClickListener(new BtnPicClickListener());
+        Button btnAbt = (Button) findViewById(R.id.button_about);
+        btnAbt.setOnClickListener(new BtnAbtClickListener());
     }
 
     // 相机按钮监听器
@@ -74,8 +77,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            intent.setDataAndType(
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(intent, CHOOSE_PHOTO);
+        }
+    }
+
+    class BtnAbtClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            AboutActivity.activityStart(MainActivity.this);
         }
     }
 
@@ -91,24 +102,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case CHOOSE_PHOTO:
                 if(resultCode == RESULT_OK) {
-                    Uri contentUri = data.getData();
-                    imageUri = convertToFileUri(contentUri);
+                    imageUri = data.getData();
                     PreviewActivity.activityStart(MainActivity.this, imageUri.toString());
                 }
                 break;
             default:
                 break;
         }
-    }
-
-    private Uri convertToFileUri(Uri contentUri) {
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(
-                contentUri,filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String imagePath = cursor.getString(columnIndex);
-        cursor.close();
-        return Uri.fromFile(new File(imagePath));
     }
 }

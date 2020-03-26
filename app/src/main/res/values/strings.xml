@@ -1,10 +1,38 @@
 <resources>
-    <string name="app_name">CropDoctor</string>
-    <string name="title">Crop Doctor</string>
+    <string name="app_name">智农</string>
     <string name="camera">拍照</string>
     <string name="sel_pic">选择图片</string>
     <string name="about">关于</string>
     <string name="confirm">确定</string>
     <string name="url">https://japaneast.api.cognitive.microsoft.com/customvision/v3.0/Prediction/cfb94534-12ec-43ed-86e1-edd694c3b93b/classify/iterations/1210-101/image</string>
     <string name="key">587e316ed8b94c82bedbb08e06ac3d5e</string>
+    <string name="preview">预览</string>
+    <string name="more_info">查看更多</string>
+    <string name="pic_preview">图片预览</string>
+    <string name="result">识别结果</string>
+    <string name="detail_info">详细信息</string>
+    <string name="about_title">关于</string>
+    <string name="about_content_title">稻花香里说丰年</string>
+    <string name="about_content_subtitle">——基于深度卷积神经网络的农作物病虫害AI智能识别预警系统</string>
+    <string name="about_content">
+        本项目又名“CropDoctor”，是一款诊断农作物病虫害的app。通过对农作物的叶片图像进行分类，识别叶片的健康状况，以及可能患有的病虫害情况。
+        \n\n
+        本项目为公益项目，旨在利用计算机视觉中深度卷积神经网络 (CNN) 在图像细粒度分类中的应用技术，降低我国大量农业人口在从事农业生产中，防治农作物病虫害花费的较高成本，惠及每一位农业生产从业者，为我国乡村振兴提供同济智慧。
+        \n\n
+        目前支持苹果，樱桃，玉米，葡萄，柑桔，桃，辣椒。马铃薯，草莓，番茄等约60种常见病虫害识别。
+        \n\n
+        数据来自2018 AI challenge，Kaggle，CVPR workshop的各种开源数据集。
+        \n\n
+        特别说明：本产品识别结果可能存在偏差，仅供辅助识别使用，如有异常情况请以农业、植保专家评估为准。
+        \n\n\n
+        开发团队：
+        \n\n
+        app前端开发：庞路
+        \n\n
+        后端模型处理：俞少作
+        \n\n
+        数据处理、文案整理：邓杰
+        \n\n
+        特别感谢：张子豪
+    </string>
 </resources>
