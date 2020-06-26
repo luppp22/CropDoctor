@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,7 +32,11 @@ public class PreviewActivity extends AppCompatActivity {
     private String uriString;
     private final int C_WIDTH = 512;
 
-    public static void activityStart(Context context, String uriString) {
+    public static void activityStart(Context context, String uriString, String uid) {
+        if(uid.equals("-1")) {
+            Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(context, PreviewActivity.class);
         intent.putExtra("uriString", uriString);
         context.startActivity(intent);

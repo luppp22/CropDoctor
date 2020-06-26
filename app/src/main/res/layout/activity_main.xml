@@ -28,64 +28,108 @@
         android:adjustViewBounds="true"
         android:src="@drawable/logo"/>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/button_camera"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp"
-            android:padding="10dp"
-            android:background="@drawable/btn_blue"
-            android:drawableTop="@drawable/ic_svg_camera"
-            android:textSize="30sp"
-            android:textColor="@android:color/background_light"
-            android:text="@string/camera">
-        </Button>
-
+        android:layout_height="wrap_content">
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp">
-            <Button
-                android:id="@+id/button_picture"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:padding="10dp"
-                android:background="@drawable/btn_purple"
-                android:drawableTop="@drawable/ic_svg_pic"
-                android:textSize="30sp"
-                android:textColor="@android:color/white"
-                android:text="@string/sel_pic"
-                style="?android:attr/borderlessButtonStyle">
-            </Button>
+            android:orientation="vertical">
 
             <Button
-                android:id="@+id/button_about"
-                android:layout_weight="1"
+                android:id="@+id/button_camera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
                 android:padding="10dp"
-                android:background="@drawable/btn_orange"
-                android:drawableTop="@drawable/ic_svg_info"
+                android:background="@drawable/btn_blue"
+                android:drawableTop="@drawable/ic_svg_camera"
                 android:textSize="30sp"
-                android:textColor="@android:color/white"
-                android:text="@string/about"
-                style="?android:attr/borderlessButtonStyle">
+                android:textColor="@android:color/background_light"
+                android:text="@string/camera">
             </Button>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp">
+                <Button
+                    android:id="@+id/button_picture"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:padding="10dp"
+                    android:background="@drawable/btn_purple"
+                    android:drawableTop="@drawable/ic_svg_pic"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/white"
+                    android:text="@string/sel_pic"
+                    style="?android:attr/borderlessButtonStyle">
+                </Button>
+
+                <Button
+                    android:id="@+id/button_about"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:padding="10dp"
+                    android:background="@drawable/btn_orange"
+                    android:drawableTop="@drawable/ic_svg_info"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/white"
+                    android:text="@string/about"
+                    style="?android:attr/borderlessButtonStyle">
+                </Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp">
+
+                <Button
+                    android:id="@+id/button_login"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:padding="10dp"
+                    android:background="@drawable/btn_purple"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/white"
+                    android:text="@string/login"
+                    style="?android:attr/borderlessButtonStyle">
+                </Button>
+
+                <Button
+                    android:id="@+id/button_user"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:padding="10dp"
+                    android:background="@drawable/btn_orange"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/white"
+                    android:text="@string/user_info"
+                    style="?android:attr/borderlessButtonStyle">
+                </Button>
+
+            </LinearLayout>
+
+
         </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

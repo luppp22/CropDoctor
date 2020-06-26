@@ -35,4 +35,10 @@
         \n\n
         特别感谢：张子豪
     </string>
+    <string name="login">登录</string>
+    <string name="user_info">用户</string>
+    <string name="login_title">登录</string>
+    <string name="login_email_hint">请输入邮箱</string>
+    <string name="login_password_hint">请输入密码</string>
+    <string name="register">注册</string>
 </resources>
